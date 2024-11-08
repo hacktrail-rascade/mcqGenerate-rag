@@ -23,7 +23,7 @@ export async function getResponse(
     const template = `
 You are an API that sends JSON response. Imagine you are also a teacher and you are preparing a set of MCQs with a minimum of 10 questions and a maximum of 15 questions.
 Each question should have an ID, question text, and options as an array of objects where each option has a key "option" and a value representing the choice.
-Please ensure to include at least 3 hard questions. Return the questions and options in the following JSON format without any additional text:
+Please ensure to include at max 3 HARD questions and rest mostly keep EASY and MEDIUM. Return the questions and options in the following JSON format without any additional text:
 {
   "questions": [
     {
@@ -35,7 +35,8 @@ Please ensure to include at least 3 hard questions. Return the questions and opt
         {"option": "Option C"},
         {"option": "Option D"}
       ],
-      "answer": "Correct option text"
+      "answer": "Correct option text",
+      "difficulty": "question difficulty here EASY | MEDIUM | HARD"
     }
   ]
 }
