@@ -17,9 +17,9 @@ export async function getResponse(
     });
 
     const transcriptResponse = await fetchTranscriptData(videoID, c);
+    // @ts-ignore
     const videoTranscript = transcriptResponse.transcript;
 
-    // Create a system message template
     const template = `
 You are an API that sends JSON response. Imagine you are also a teacher and you are preparing a set of MCQs with a minimum of 10 questions and a maximum of 15 questions.
 Each question should have an ID, question text, and options as an array of objects where each option has a key "option" and a value representing the choice.
@@ -43,17 +43,15 @@ Please ensure to include at least 3 hard questions. Return the questions and opt
 Use the following transcript as context to generate questions:
 ${videoTranscript}`;
 
-    // Create messages array for the chat model
     const messages = [
       { role: "system", content: "You are a helpful AI assistant." },
       { role: "user", content: template },
     ];
 
-    // Get the response from the LLM model
     const response = await llm.call(messages);
 
     try {
-      // Parse the response content as JSON
+      // @ts-ignore
       const jsonResponse = JSON.parse(response.content);
       return jsonResponse;
     } catch (parseError) {
